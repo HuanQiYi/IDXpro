@@ -1,0 +1,27 @@
+@charset "utf-8";
+.bannerBox{
+	.banner{
+		width: 1126px;
+		margin:0 auto;
+		height: 500px;
+		li{
+			position: relative;
+			display: none;
+			a{
+				display: block;
+				height: 500px;
+				img{
+					position: absolute;
+					width: 1920px;
+					left: 50%;
+					margin-left: -960px;
+				}
+			}
+		}
+		& span:nth-of-type(1){
+			position: absolute;
+			left: 0;
+			top:225px;
+		}
+	}
+}

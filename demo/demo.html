@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		.div1{width: 415px;height: 433px;border: 1px solid;float: left;position: relative;margin-left: 100px;}
+		.div2{width: 415px;height: 433px;float: left;border: 1px solid;margin-left: 10px;overflow: hidden;position: relative;display: none;}
+		.div2 img{width: 830px;height: 866px;position: absolute;}
+		.div3{background: #fff;opacity: 0.3;width: 208px;height: 217px;position: absolute;display: none;left: 0;top: 0}
+	</style>
+	<script src="../jquery-1.10.1.min.js"></script>
+	<script>
+		$(function(){
+			magnifier($('.div1'),$(".div3"),$(".div2"))
+
+			function magnifier(smallBox,floatLayer,bigBox){
+				smallBox.mouseenter(function(){
+					bigBox.show();
+					floatLayer.show();
+				})
+				smallBox.mouseleave(function(){
+					bigBox.hide();
+					floatLayer.hide();
+				})
+
+				smallBox.mousemove(function(ev){
+					var l = ev.clientX - floatLayer.width() / 2 - smallBox.offset().left;
+					var t = ev.clientY - floatLayer.height() / 2 - smallBox.offset().top;
+					if(l < 0){
+						l = 0
+					}
+					if(l > smallBox.width() - floatLayer.width()){
+						l = smallBox.width() - floatLayer.width()
+					}
+					if(t < 0){
+						t = 0;
+					}
+					if(t > smallBox.height() - floatLayer.height()){
+						t = smallBox.height() - floatLayer.height()
+					}
+					floatLayer.css("left",l+'px');
+					floatLayer.css("top",t+'px');
+
+					bigBox.find('img').css("left",- l / smallBox.width() * bigBox.find('img').width() )
+					bigBox.find('img').css("top",- t / smallBox.height() * bigBox.find('img').height())
+				})
+			}
+			
+		})
+		/*$(function(){
+			var offsetX = 0;
+			var offsetY = 0;
+			$('.div1').mousemove(function(ev){
+				$('.div3').css('display','block');
+				$('.div2').css('display','block');
+				if(ev.clientX >= 104 && ev.clientX <= 311){
+					offsetX = ev.clientX - 104 - $('.div1').offset().left;
+					var X = offsetX / parseInt($('.div1').css('width'));
+					$('.div2 img').css('left',- X * parseInt($('.div2 img').css('width'))  + 'px')
+					// $('.div3').css('left', ev.clientX - 104 + 'px')
+				}
+				if(ev.clientY >= 108 && ev.clientY <= 325){
+					offsetY = ev.clientY - 108 - $('.div1').offset().top;
+					var Y = offsetY / parseInt($('.div1').css('height'));
+				
+					$('.div2 img').css('top',- Y * parseInt($('.div2 img').css('height')  )+ 'px')
+					// $('.div3').css('top', ev.clientY - 108 + 'px')
+				}
+			})
+			$('.div1').mouseleave(function(){
+				$('.div2').css('display','none');
+				$('.div3').css('display','none');
+			})
+		})*/
+	</script>
+</head>
+<body>
+	<div class="div1"><img src="../images/ym.png" alt=""><div class="div3"></div></div>
+	<div class="div2"><img src="../images/ym.png" alt=""></div>
+	
+</body>
+</html>
